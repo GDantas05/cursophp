@@ -18,6 +18,8 @@
 			<th>Nome do Produto</th>
 			<th>Preço</th>
 			<th>Descrição</th>
+			<th>Categoria</th>
+			<th>Usado?</th>
 			<th></th>
 		</tr>
 		<?php foreach ($produtos as $produto): ?>
@@ -25,7 +27,12 @@
 			<td><?= $produto['nome'] ?></td>
 			<td><?= $produto['preco'] ?></td>
 			<td><?= substr($produto['descricao'], 0, 40) ?></td>
-			<td><?= $produto['categoria_id']?></td>
+			<td><?= $produto['categoria_nome']?></td>
+			<td><?php if($produto['usado'] == 1) {
+							echo "Sim";
+					  } else {
+					  		echo "Não";
+				        } ?></td>
 			<td>
 				<form action="remove-produto.php" method="post">
 					<input type="hidden" name="id" value="<?= $produto['id'] ?>">

@@ -2,9 +2,12 @@
 <?php 
 	  require_once("conecta.php");
 	  require_once("banco-categoria.php");
+	  require_once("logica-usuario.php");
+	  verificaUsuario();
 
 	  $categorias = listaCategorias($conexao);
  ?>		
+ 
 <h1>Formulário de Cadastro</h1>
 <form action="adiciona-produto.php" method="post">
 	<div class="form-group">

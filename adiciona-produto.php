@@ -1,6 +1,9 @@
 <?php require_once("cabecalho.php"); ?>
 <?php require_once("conecta.php"); //ARQUIVO QUE FAZ A CONEXÃO COM O BANCO?>
-<?php require_once("banco-produto.php") ?>
+<?php require_once("banco-produto.php"); ?>
+<?php require_once("logica-usuario.php"); 
+	  verificaUsuario();
+?>
 	 
 	 <?php 
 	 	 $nome         = $_POST["nome"];
