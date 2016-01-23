@@ -15,10 +15,21 @@
 		return $produtos;
 	}
 
-	function insereProduto($conexao, $nome, $preco, $descricao, $categoria_id, $usado)
-	{
-	 	$query = "insert into produtos(nome, preco, descricao, categoria_id, usado) values ('{$nome}', {$preco}, '{$descricao}', {$categoria_id}, {$usado})";
+	function insereProduto($conexao, $produto)
+	{	
+		if(array_key_exists("usado", $_POST)) {
+		 	$produto->usado = "true";	
+		} else {
+		 	$produto->usado = "false";
+		}
 
+		$nome       = mysqli_real_escape_string($conexao, $produto->nome);
+		$preco      = mysqli_real_escape_string($conexao, $produto->preco);
+		$descricao  = mysqli_real_escape_string($conexao, $produto->descricao);
+		$categoria  = mysqli_real_escape_string($conexao, $produto->categoria);
+		$usado      = mysqli_real_escape_string($conexao, $produto->usado);
+
+	 	$query      = "insert into produtos(nome, preco, descricao, categoria_id, usado) values ('{$nome}', {$preco}, '{$descricao}', {$categoria}, {$usado})";
 	 	return mysqli_query($conexao, $query);
 	}
 

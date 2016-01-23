@@ -2,28 +2,24 @@
 <?php require_once("conecta.php"); //ARQUIVO QUE FAZ A CONEXÃO COM O BANCO?>
 <?php require_once("banco-produto.php"); ?>
 <?php require_once("logica-usuario.php"); 
+	  require_once("produto.php");
 	  verificaUsuario();
 ?>
 	 
 	 <?php 
-	 	 $nome         = $_POST["nome"];
-		 $preco        = $_POST["preco"];
-		 $descricao    = $_POST["descricao"];
-		 $categoria_id = $_POST["categoria_id"];
-		 //$usado        = $_POST["usado"];
-		 
-		 if(array_key_exists("usado", $_POST)) {
-		 	$usado = "true";	
-		 } else {
-		 	$usado = "false";
-		 }
+	 	 $produto = new Produto();
+	 	 $produto->nome      = $_POST["nome"];
+		 $produto->preco     = $_POST["preco"];
+		 $produto->descricao = $_POST["descricao"];
+		 $produto->categoria = $_POST["categoria_id"];
+		 $produto->usado     = $_POST["usado"];
 
-		 $inseriuProduto = insereProduto($conexao, $nome, $preco, $descricao, $categoria_id, $usado);
+		 $inseriuProduto = insereProduto($conexao, $produto);
 
 		 if ($inseriuProduto) {
-			echo "<p class='alert-success'>Produto {$nome}, R$ {$preco} adicionado com sucesso</p>";
+			echo "<p class='alert-success'>Produto {$produto->nome}, R$ {$produto->preco} adicionado com sucesso</p>";
 		 } else {
-			echo "<p class='alert-danger'>Erro ao cadastrar o produto {$nome}</p>";
+			echo "<p class='alert-danger'>Erro ao cadastrar o produto {$produto->nome}</p>";
 		 }
 
 		 //SEMPRE LEMBRAR DE FECHAR A CONEXÃO
