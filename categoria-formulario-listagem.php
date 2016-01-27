@@ -39,13 +39,13 @@
 	</tr>
 	<?php foreach ($categorias as $categoria) : ?>
 	<tr>
-		<td><?= $categoria['nome'] ?></td>	
+		<td><?= $categoria->nome ?></td>
 		<td>
 			<form action="remove-categoria.php" method="post">
-				<input type="hidden" name="id" value="<?= $categoria['id'] ?>">
+				<input type="hidden" name="id" value="<?= $categoria->id ?>">
 				<button class="btn btn-danger">Remove</button>
 			</form>
 		</td>
-	</tr>	
+	</tr>
 	<?php endforeach ?>
 </table>

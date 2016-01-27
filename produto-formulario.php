@@ -1,13 +1,13 @@
-<?php require_once("cabecalho.php"); ?>	
-<?php 
+<?php require_once("cabecalho.php"); ?>
+<?php
 	  require_once("conecta.php");
 	  require_once("banco-categoria.php");
 	  require_once("logica-usuario.php");
 	  verificaUsuario();
 
 	  $categorias = listaCategorias($conexao);
- ?>		
- 
+ ?>
+
 <h1>Formulário de Cadastro</h1>
 <form action="adiciona-produto.php" method="post">
 	<div class="form-group">
@@ -22,8 +22,8 @@
 		<label>Categoria: </label>
 		<select name="categoria_id" class="form-control">
 			<?php foreach ($categorias as $categoria) : ?>
-					<option value="<?= $categoria['id'] ?>">
-						<?= $categoria['nome'] ?>
+					<option value="<?= $categoria->id ?>">
+						<?= $categoria->nome ?>
 					</option>
 		    <?php endforeach ?>
 		</select>
@@ -40,4 +40,4 @@
 		<input type="submit" name="cadastrar" class="btn btn-primary" value="Cadastrar">
 	</div>
 </form>
-<?php require_once("rodape.php"); ?>			
+<?php require_once("rodape.php"); ?>

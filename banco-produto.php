@@ -1,14 +1,26 @@
 <?php
+	require_once 'produto.php';
+	require_once 'categoria.php';
+
 	function listaProdutos($conexao)
 	{
 		$produtos = array();
-		$resultado = mysqli_query($conexao, "select p.*, 
+		$resultado = mysqli_query($conexao, "select p.*,
 												    c.nome as categoria_nome
 												 from produtos as p,
-												 	  categorias as c 
+												 	  categorias as c
 											  where p.categoria_id = c.id");
 
-		while ($produto = mysqli_fetch_assoc($resultado)) {
+		while ($array = mysqli_fetch_assoc($resultado)) {
+			$produto = new Produto();
+			$produto->id              = $array['id'];
+			$produto->nome            = $array['nome'];
+			$produto->descricao       = $array['descricao'];
+			$produto->preco           = $array['preco'];
+			$produto->categoria       = new Categoria();
+			$produto->categoria->id   = $array['categoria_id'];
+			$produto->categoria->nome = $array['categoria_nome'];
+			$produto->usado           = $array['usado'];
 			array_push($produtos, $produto);
 		}
 
@@ -16,9 +28,9 @@
 	}
 
 	function insereProduto($conexao, $produto)
-	{	
+	{
 		if(array_key_exists("usado", $_POST)) {
-		 	$produto->usado = "true";	
+		 	$produto->usado = "true";
 		} else {
 		 	$produto->usado = "false";
 		}
