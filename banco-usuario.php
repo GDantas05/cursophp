@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 	function buscaUsuario($conexao, $login, $senha)
 	{
