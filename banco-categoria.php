@@ -9,17 +9,18 @@
 
 		while ($array = mysqli_fetch_assoc($resultado)) {
 			$categoria = new Categoria();
-			$categoria->id   = $array['id'];
-			$categoria->nome = $array['nome'];
+			$categoria->setId($array['id']);
+			$categoria->setNome($array['nome']);
+
 			array_push($categorias, $categoria);
 		}
 
 		return $categorias;
 	}
 
-	function insereCategoria($conexao, $nome)
+	function insereCategoria($conexao, $categoria)
 	{
-		$query = "insert into categorias(nome) values('{$nome}')";
+		$query = "insert into categorias(nome) values('{$categoria->getNome()}')";
 
 		return mysqli_query($conexao, $query);
 	}

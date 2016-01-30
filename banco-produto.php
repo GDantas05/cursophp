@@ -13,14 +13,18 @@
 
 		while ($array = mysqli_fetch_assoc($resultado)) {
 			$produto = new Produto();
-			$produto->id              = $array['id'];
-			$produto->nome            = $array['nome'];
-			$produto->descricao       = $array['descricao'];
-			$produto->preco           = $array['preco'];
-			$produto->categoria       = new Categoria();
-			$produto->categoria->id   = $array['categoria_id'];
-			$produto->categoria->nome = $array['categoria_nome'];
-			$produto->usado           = $array['usado'];
+			$produto->setId($array['id']);
+			$produto->setNome($array['nome']);
+			$produto->setDescricao($array['descricao']);
+			$produto->setPreco($array['preco']);
+
+			$categoria = new Categoria();
+			$categoria->setId($array['categoria_id']);
+			$categoria->setNome($array['categoria_nome']);
+
+			$produto->setCategoria($categoria);
+			$produto->setUsado($array['usado']);
+
 			array_push($produtos, $produto);
 		}
 
@@ -30,16 +34,16 @@
 	function insereProduto($conexao, $produto)
 	{
 		if(array_key_exists("usado", $_POST)) {
-		 	$produto->usado = "true";
+		 	$produto->setUsado("true");
 		} else {
-		 	$produto->usado = "false";
+		 	$produto->setUsado("false");
 		}
 
-		$nome       = mysqli_real_escape_string($conexao, $produto->nome);
-		$preco      = mysqli_real_escape_string($conexao, $produto->preco);
-		$descricao  = mysqli_real_escape_string($conexao, $produto->descricao);
-		$categoria  = mysqli_real_escape_string($conexao, $produto->categoria);
-		$usado      = mysqli_real_escape_string($conexao, $produto->usado);
+		$nome       = mysqli_real_escape_string($conexao, $produto->getNome());
+		$preco      = mysqli_real_escape_string($conexao, $produto->getPreco());
+		$descricao  = mysqli_real_escape_string($conexao, $produto->getDescricao());
+		$categoria  = mysqli_real_escape_string($conexao, $produto->getCategoria());
+		$usado      = mysqli_real_escape_string($conexao, $produto->getUsado());
 
 	 	$query      = "insert into produtos(nome, preco, descricao, categoria_id, usado) values ('{$nome}', {$preco}, '{$descricao}', {$categoria}, {$usado})";
 	 	return mysqli_query($conexao, $query);

@@ -20,22 +20,25 @@
 			<th>Descrição</th>
 			<th>Categoria</th>
 			<th>Usado?</th>
+			<th>10% Desconto</th>
 			<th></th>
 		</tr>
 		<?php foreach ($produtos as $produto): ?>
 		<tr>
-			<td><?= $produto->nome ?></td>
-			<td><?= $produto->preco ?></td>
-			<td><?= substr($produto->descricao, 0, 40) ?></td>
-			<td><?= $produto->categoria->nome ?></td>
-			<td><?php if($produto->usado == 1) {
+			<td><?= $produto->getNome() ?></td>
+			<td><?= $produto->getPreco() ?></td>
+			<td><?= substr($produto->getDescricao(), 0, 40) ?></td>
+			<td><?= $produto->getCategoria()->getNome() ?></td>
+			<td><?php if($produto->getUsado() == 1) {
 							echo "Sim";
 					  } else {
 					  		echo "Não";
-				        } ?></td>
+				        } ?>
+			</td>
+			<td><?= $produto->subtraiDesconto(0.1) ?></td>
 			<td>
 				<form action="remove-produto.php" method="post">
-					<input type="hidden" name="id" value="<?= $produto->id ?>">
+					<input type="hidden" name="id" value="<?= $produto->getId() ?>">
 					<button class="btn btn-danger">Remove</button>
 				</form>
 			</td>

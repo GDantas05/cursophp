@@ -1,2 +1,2 @@
 <?php
-	$conexao = mysqli_connect('localhost', 'root', 'masterkey', 'loja');
+	$conexao = mysqli_connect('localhost', 'root', '', 'loja');

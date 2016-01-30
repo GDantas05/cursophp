@@ -22,8 +22,8 @@
 		<label>Categoria: </label>
 		<select name="categoria_id" class="form-control">
 			<?php foreach ($categorias as $categoria) : ?>
-					<option value="<?= $categoria->id ?>">
-						<?= $categoria->nome ?>
+					<option value="<?= $categoria->getId() ?>">
+						<?= $categoria->getNome() ?>
 					</option>
 		    <?php endforeach ?>
 		</select>

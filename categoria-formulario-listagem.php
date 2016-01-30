@@ -39,10 +39,10 @@
 	</tr>
 	<?php foreach ($categorias as $categoria) : ?>
 	<tr>
-		<td><?= $categoria->nome ?></td>
+		<td><?= $categoria->getNome() ?></td>
 		<td>
 			<form action="remove-categoria.php" method="post">
-				<input type="hidden" name="id" value="<?= $categoria->id ?>">
+				<input type="hidden" name="id" value="<?= $categoria->getId() ?>">
 				<button class="btn btn-danger">Remove</button>
 			</form>
 		</td>
