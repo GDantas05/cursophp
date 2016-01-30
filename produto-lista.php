@@ -22,6 +22,7 @@
 			<th>Usado?</th>
 			<th>10% Desconto</th>
 			<th></th>
+			<th></th>
 		</tr>
 		<?php foreach ($produtos as $produto): ?>
 		<tr>
@@ -36,6 +37,7 @@
 				        } ?>
 			</td>
 			<td><?= $produto->subtraiDesconto(0.1) ?></td>
+			<td><a href="produto-formulario.php?id=<?= $produto->getId() ?>" class="btn btn-primary">Altera</a></td>
 			<td>
 				<form action="remove-produto.php" method="post">
 					<input type="hidden" name="id" value="<?= $produto->getId() ?>">

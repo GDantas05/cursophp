@@ -3,26 +3,40 @@
 	  require_once("conecta.php");
 	  require_once("banco-categoria.php");
 	  require_once("logica-usuario.php");
+	  require_once("banco-produto.php");
 	  verificaUsuario();
 
 	  $categorias = listaCategorias($conexao);
+	  $produto = new Produto();
+	  $produto->setCategoria(new Categoria());
+	  $action = "adiciona-produto.php";
+
+	  if (array_key_exists('id', $_GET)) {
+	  		$id          = $_GET['id'];
+	  		$produto     = buscaProduto($conexao, $id);
+	  		$ehAlteracao = true;
+	  		$action      = "altera-produto.php";
+	  }
  ?>
 
 <h1>Formulário de Cadastro</h1>
-<form action="adiciona-produto.php" method="post">
+<form action=<?= $action ?> method="post">
 	<div class="form-group">
 		<label>Nome: </label>
-		<input type="text" name="nome" class="form-control">
+		<input type="text" name="nome" class="form-control" value="<?= $produto->getNome() ?>">
 	</div>
 	<div class="form-group">
 		<label>Preço: </label>
-		<input type="number" name="preco" class="form-control">
+		<input type="number" name="preco" class="form-control" value="<?= $produto->getPreco() ?>">
 	</div>
 	<div class="form-group">
 		<label>Categoria: </label>
 		<select name="categoria_id" class="form-control">
 			<?php foreach ($categorias as $categoria) : ?>
-					<option value="<?= $categoria->getId() ?>">
+			<?php $essaEhACategoria = $produto->getCategoria()->getId() == $categoria->getId();
+				  $select = $essaEhACategoria ? "selected='selected'" : "";
+			?>
+					<option value="<?= $categoria->getId() ?>" <?= $select ?> >
 						<?= $categoria->getNome() ?>
 					</option>
 		    <?php endforeach ?>
@@ -30,14 +44,21 @@
 	</div>
 	<div class="form-group">
 		<label>Descrição </label>
-		<textarea name="descricao" cols="30" rows="10" class="form-control"></textarea>
+		<textarea name="descricao" cols="30" rows="10" class="form-control"><?= $produto->getDescricao() ?></textarea>
 	</div>
 	<div class="form-group">
 		<label>Usado? </label>
-		<input type="checkbox" name="usado" value="true">
+		<?php $usado = $produto->getUsado() ? "checked='checked'" : ""; ?>
+		<input type="checkbox" name="usado" value="true" <?= $usado ?>>
 	</div>
 	<div class="form-group">
-		<input type="submit" name="cadastrar" class="btn btn-primary" value="Cadastrar">
+		<?php $botao = $ehAlteracao ? "value='Alterar'" : "value='Cadastrar'"; ?>
+
+		<?php if ($ehAlteracao) : ?>
+			<input type="hidden" name="id" value="<?= $produto->getId() ?>">
+		<?php endif ?>
+
+		<input type="submit" name="cadastrar" class="btn btn-primary" <?= $botao ?>>
 	</div>
 </form>
 <?php require_once("rodape.php"); ?>
