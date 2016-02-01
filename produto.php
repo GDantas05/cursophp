@@ -1,4 +1,4 @@
-<?php 
+<?php
 	/**
 	* Classe produto
 	*/
@@ -10,6 +10,17 @@
 		private $descricao;
 		private $categoria;
 		private $usado = false;
+
+		function __construct($nome, $preco)
+		{
+				$this->setNome($nome);
+				$this->setPreco($preco);
+		}
+
+		function __destruct()
+		{
+			echo "Destruindo o produto ".$this->getNome();
+		}
 
 		function getId()
 		{
@@ -70,7 +81,7 @@
 		{
 			$this->usado = $usado;
 		}
-	
+
 		function subtraiDesconto($valor)
 		{
 			if ($valor == null) {
@@ -82,6 +93,6 @@
 			}
 
 			return $this->preco;
-		}	
+		}
 	}
  ?>
