@@ -1,7 +1,10 @@
 <?php require_once("cabecalho.php"); ?>
 <?php require_once("conecta.php"); //ARQUIVO QUE FAZ A CONEXÃO COM O BANCO?>
 <?php require_once("banco-produto.php") ?>
-<?php $produtos = listaProdutos($conexao); ?>
+<?php require_once("logica-usuario.php"); ?>
+<?php $produtos = listaProdutos($conexao);
+		  verificaUsuario();
+?>
 
 	<?php if(array_key_exists("removido", $_GET)) {
 			if ($_GET['removido']) {
