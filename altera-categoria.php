@@ -3,7 +3,8 @@
   require_once("conecta.php"); //ARQUIVO QUE FAZ A CONEXÃO COM O BANCO
   require_once("banco-categoria.php");
   require_once("logica-usuario.php");
-  require_once("categoria.php");
+  require_once("autoload.php");
+  //require_once("categoria.php");
   verificaUsuario();
 
   $categoria = new Categoria();

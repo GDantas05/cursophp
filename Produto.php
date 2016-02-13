@@ -11,7 +11,7 @@
 		private $categoria;
 		private $usado = false;
 
-		function __construct($nome, $preco)
+		/*function __construct($nome, $preco)
 		{
 				$this->setNome($nome);
 				$this->setPreco($preco);
@@ -20,7 +20,7 @@
 		function __destruct()
 		{
 			echo "Destruindo o produto ".$this->getNome();
-		}
+		}*/
 
 		function getId()
 		{

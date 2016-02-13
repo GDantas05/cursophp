@@ -3,17 +3,20 @@
 	  require_once("conecta.php");
 	  require_once("banco-categoria.php");
 	  require_once("logica-usuario.php");
-	  require_once("banco-produto.php");
+	  //require_once("banco-produto.php");
+	  require_once("autoload.php");
 	  verificaUsuario();
 
 	  $categorias = listaCategorias($conexao);
 	  $produto = new Produto();
 	  $produto->setCategoria(new Categoria());
 	  $action = "adiciona-produto.php";
+	  $ehAlteracao = false;
 
 	  if (array_key_exists('id', $_GET)) {
 	  		$id          = $_GET['id'];
-	  		$produto     = buscaProduto($conexao, $id);
+	  		$dao         = new ProdutoDAO($conexao);
+	  		$produto     = $dao->buscaProduto($id);
 	  		$ehAlteracao = true;
 	  		$action      = "altera-produto.php";
 	  }

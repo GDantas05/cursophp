@@ -1,8 +1,9 @@
 <?php require_once("cabecalho.php"); ?>
 <?php require_once("conecta.php"); //ARQUIVO QUE FAZ A CONEXÃO COM O BANCO?>
-<?php require_once("banco-produto.php"); ?>
+<?php //require_once("banco-produto.php"); ?>
 <?php require_once("logica-usuario.php"); 
-	  require_once("produto.php");
+	  require_once("autoload.php");	
+	  //require_once("produto.php");
 	  verificaUsuario();
 ?>
 	 
@@ -14,7 +15,9 @@
 		 $produto->setCategoria($_POST["categoria_id"]);
 		 $produto->setUsado($_POST["usado"]);
 
-		 $inseriuProduto = insereProduto($conexao, $produto);
+		 $dao = new ProdutoDAO($conexao);
+
+		 $inseriuProduto = $dao->insereProduto($produto);
 
 		 if ($inseriuProduto) {
 			echo "<p class='alert-success'>Produto {$produto->getNome()}, R$ {$produto->getPreco()} adicionado com sucesso</p>";

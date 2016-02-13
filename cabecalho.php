@@ -18,6 +18,7 @@
 					<li><a href="produto-lista.php">Produtos</a></li>
 					<li><a href="categoria-formulario-listagem.php">Categoria</a></li>
 					<li><a href="sobre.php">Sobre</a></li>
+					<li><a href="contato.php">Contato</a></li>
 				</ul>
 			</div>
 		</div>

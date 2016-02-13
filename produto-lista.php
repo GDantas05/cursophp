@@ -1,9 +1,12 @@
 <?php require_once("cabecalho.php"); ?>
 <?php require_once("conecta.php"); //ARQUIVO QUE FAZ A CONEXÃO COM O BANCO?>
-<?php require_once("banco-produto.php") ?>
+<?php //require_once("banco-produto.php") ?>
 <?php require_once("logica-usuario.php"); ?>
-<?php $produtos = listaProdutos($conexao);
-		  verificaUsuario();
+<?php require_once("autoload.php");  ?>
+<?php 
+	  $dao = new ProdutoDAO($conexao);
+	  $produtos = $dao->listaProdutos($conexao);
+	  verificaUsuario();
 ?>
 
 	<?php if(array_key_exists("removido", $_GET)) {
