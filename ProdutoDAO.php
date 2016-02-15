@@ -22,50 +22,87 @@ class ProdutoDAO
 											  where p.categoria_id = c.id");
 
 		while ($array = mysqli_fetch_assoc($resultado)) {
-			$produto = new Produto();
-			$produto->setId($array['id']);
-			$produto->setNome($array['nome']);
-			$produto->setDescricao($array['descricao']);
-			$produto->setPreco($array['preco']);
-
-			$categoria = new Categoria();
-			$categoria->setId($array['categoria_id']);
-			$categoria->setNome($array['categoria_nome']);
-
-			$produto->setCategoria($categoria);
-			$produto->setUsado($array['usado']);
-
+			
+			$tipoProduto = $array['tipo_produto'];
+			$factory     = new ProdutoFactory();
+			$produto     = $factory->criaPor($tipoProduto);
+			$produto->atualizaBaseadoEm($array);
+			
 			array_push($produtos, $produto);
 		}
-
+		
 		return $produtos;
 	}
 
 	function insereProduto($produto)
 	{
+		
 		if(array_key_exists("usado", $_POST)) {
 		 	$produto->setUsado("true");
 		} else {
 		 	$produto->setUsado("false");
 		}
+		
+		$isbn = "";
+		if (method_exists($produto, "getIsbn")) {
+			$isbn = mysqli_real_escape_string($this->conexao, $produto->getIsbn());
+		}
+		
+		$waterMark = "";
+		if (method_exists($produto, "getWaterMark")) {
+			$waterMark = mysqli_real_escape_string($this->conexao, $produto->getWaterMark());
+		}
+		
+		$taxaImpressao = "";
+		if (method_exists($produto, "getTaxaImpressao")) {
+			$taxaImpressao = mysqli_real_escape_string($this->conexao, $produto->getTaxaImpressao());
+		}
+				
+		$nome        = mysqli_real_escape_string($this->conexao, $produto->getNome());
+		$preco       = mysqli_real_escape_string($this->conexao, $produto->getPreco());
+		$descricao   = mysqli_real_escape_string($this->conexao, $produto->getDescricao());
+		$categoria   = mysqli_real_escape_string($this->conexao, $produto->getCategoria()->getId());
+		$usado       = mysqli_real_escape_string($this->conexao, $produto->getUsado());
+		$tipoProduto = mysqli_real_escape_string($this->conexao, $produto->getTipoProduto());
 
-		$nome       = mysqli_real_escape_string($this->conexao, $produto->getNome());
-		$preco      = mysqli_real_escape_string($this->conexao, $produto->getPreco());
-		$descricao  = mysqli_real_escape_string($this->conexao, $produto->getDescricao());
-		$categoria  = mysqli_real_escape_string($this->conexao, $produto->getCategoria());
-		$usado      = mysqli_real_escape_string($this->conexao, $produto->getUsado());
-
-	 	$query      = "insert into produtos(nome, preco, descricao, categoria_id, usado) values ('{$nome}', {$preco}, '{$descricao}', {$categoria}, {$usado})";
+	 	$query      = "insert into produtos(nome, preco, descricao, categoria_id, usado, isbn, tipo_produto, watermark, taxa_impressao) values ('{$nome}', {$preco}, '{$descricao}', {$categoria}, {$usado}, '{$isbn}', '{$tipoProduto}', '{$waterMark}', '{$taxaImpressao}')";
+	 	
 	 	return mysqli_query($this->conexao, $query);
 	}
 
 	function alteraProduto($produto)
 	{
+		
+		if (array_key_exists("usado", $_POST)) {
+			$produto->setUsado("true");
+		} else {
+			$produto->setUsado("false");
+		}
+		
+		$isbn = "";
+		if (method_exists($produto, "getIsbn")) {
+			$isbn = $produto->getIsbn();
+		}
+		
+		$waterMark = "";
+		if (method_exists($produto, "getWaterMark")) {
+			$waterMark = $produto->getWaterMark();
+		}
+		
+		$taxaImpressao = "";
+		if (method_exists($produto, "getTaxaImpressao")) {
+			$taxaImpressao = $produto->getTaxaImpressao();
+		}
+		
 		$query = "update produtos set nome='{$produto->getNome()}',".
 				 " preco={$produto->getPreco()},".
 				 " descricao='{$produto->getDescricao()}',".
 				 " categoria_id={$produto->getCategoria()->getId()},".
-				 " usado={$produto->getusado()}".
+				 " usado={$produto->getusado()},".
+				 " isbn='{$isbn}',".
+				 " tipo_produto = '{$produto->getTipoProduto()}',".
+				 " watermark = '{$waterMark}',".
+				 " taxa_impressao = '{$taxaImpressao}'".
 				 " where id={$produto->getId()}";
 		 
 		return mysqli_query($this->conexao, $query);				 
@@ -84,18 +121,11 @@ class ProdutoDAO
 		$resultado = mysqli_query($this->conexao, $query);
 
 		$array = mysqli_fetch_assoc($resultado);
-		$produto = new Produto();
-		$produto->setId($array['id']);
-		$produto->setNome($array['nome']);
-		$produto->setDescricao($array['descricao']);
-		$produto->setPreco($array['preco']);
-
-		$categoria = new Categoria();
-		$categoria->setId($array['categoria_id']);
-		$categoria->setNome($array['categoria_nome']);
-
-		$produto->setCategoria($categoria);
-		$produto->setUsado($array['usado']);
+		
+		$tipoProduto = $array['tipo_produto'];
+		$factory     = new ProdutoFactory();
+		$produto     = $factory->criaPor($tipoProduto);
+		$produto->atualizaBaseadoEm($array);
 		
 		return $produto;
 	}

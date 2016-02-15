@@ -7,14 +7,14 @@
 	  verificaUsuario();
 ?>
 	 
-	 <?php 
-	 	 $produto = new Produto();
-	 	 $produto->setNome($_POST["nome"]);
-		 $produto->setPreco($_POST["preco"]);
-		 $produto->setDescricao($_POST["descricao"]);
-		 $produto->setCategoria($_POST["categoria_id"]);
-		 $produto->setUsado($_POST["usado"]);
-
+	 <?php
+	 	 
+	 	 $tipoProduto = $_POST['tipo_produto'];
+	 	 
+	 	 $factory = new ProdutoFactory();
+	 	 $produto = $factory->criaPor($tipoProduto);
+	 	 $produto->atualizaBaseadoEm($_POST);
+		
 		 $dao = new ProdutoDAO($conexao);
 
 		 $inseriuProduto = $dao->insereProduto($produto);

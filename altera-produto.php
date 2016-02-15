@@ -10,23 +10,12 @@
 ?>
 
 	 <?php
-	 	 $produto = new Produto();
-	 	 $produto->setId($_POST["id"]);
-	 	 $produto->setNome($_POST["nome"]);
-		 $produto->setPreco($_POST["preco"]);
-		 $produto->setDescricao($_POST["descricao"]);
-
-		 $categoria = new Categoria();
-		 $categoria->setId($_POST['categoria_id']);
-		 $produto->setCategoria($categoria);
-		 $usado = "false";
-
-		 if (array_key_exists('usado', $_POST)) {
-		 	$usado = "true";
-		 }
-
-		 $produto->setUsado($usado);
-
+	 	 $tipoProduto = $_POST['tipo_produto'];
+	 	 
+	 	 $factory = new ProdutoFactory();
+	 	 $produto = $factory->criaPor($tipoProduto);
+	 	 $produto->atualizaBaseadoEm($_POST);
+		 
 		 $dao = new ProdutoDAO($conexao);
 
 		 $alterouProduto = $dao->alteraProduto($produto);

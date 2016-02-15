@@ -25,8 +25,12 @@
 			<th>Preço</th>
 			<th>Descrição</th>
 			<th>Categoria</th>
+			<th>Tipo do Produto</th>
 			<th>Usado?</th>
-			<th>10% Desconto</th>
+			<th>ISBN</th>
+			<th>Watermark</th>
+			<th>Taxa de Impressão</th>
+			<th>Valor sem Imposto</th>
 			<th></th>
 			<th></th>
 		</tr>
@@ -36,13 +40,26 @@
 			<td><?= $produto->getPreco() ?></td>
 			<td><?= substr($produto->getDescricao(), 0, 40) ?></td>
 			<td><?= $produto->getCategoria()->getNome() ?></td>
+			<td><?= $produto->getTipoProduto() ?></td>
 			<td><?php if($produto->getUsado() == 1) {
 							echo "Sim";
 					  } else {
 					  		echo "Não";
 				        } ?>
 			</td>
-			<td><?= $produto->subtraiDesconto(0.1) ?></td>
+			<td><?php if ($produto->temIsbn()):?> 
+						<?= $produto->getIsbn(); ?>
+			   <?php endif ?>
+			</td>
+			<td> <?php if ($produto->temWaterMark()): ?>
+							aaaaa<?= $produto->getWaterMark(); ?>
+				 <?php endif ?>			
+			</td>
+			<td> <?php if ($produto->temTaxaImpressao()): ?>
+							<?= $produto->getTaxaImpressao(); ?>
+				 <?php endif ?>			
+			</td>
+			<td><?= $produto->calculaImposto() ?></td>
 			<td><a href="produto-formulario.php?id=<?= $produto->getId() ?>" class="btn btn-primary">Altera</a></td>
 			<td>
 				<form action="remove-produto.php" method="post">

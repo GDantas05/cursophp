@@ -1,8 +1,11 @@
 <?php
+
+	require_once 'autoload.php';
+	
 	/**
 	* Classe produto
 	*/
-	class Produto
+	abstract class Produto
 	{
 		private $id;
 		private $nome;
@@ -10,6 +13,7 @@
 		private $descricao;
 		private $categoria;
 		private $usado = false;
+		private $tipoProduto;
 
 		/*function __construct($nome, $preco)
 		{
@@ -81,6 +85,16 @@
 		{
 			$this->usado = $usado;
 		}
+		
+		function getTipoProduto()
+		{
+			return $this->tipoProduto;
+		}
+		
+		function setTipoProduto($tipoProduto)
+		{
+			$this->tipoProduto = $tipoProduto;
+		}
 
 		function subtraiDesconto($valor)
 		{
@@ -94,5 +108,27 @@
 
 			return $this->preco;
 		}
+		
+		function temIsbn()
+		{
+			return ($this instanceof Ebook || $this instanceof LivroFisico);
+		}
+		
+		function temWaterMark()
+		{
+			return $this instanceof Ebook;
+		}
+		
+		function temTaxaImpressao()
+		{
+			return $this instanceof LivroFisico;
+		}
+		
+		function calculaImposto()
+		{
+			return $this->preco - $this->preco * 0.195;
+		}
+		
+		abstract function atualizaBaseadoEm($params);
 	}
  ?>
